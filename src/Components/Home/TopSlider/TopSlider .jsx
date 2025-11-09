@@ -23,7 +23,7 @@ const sliderImages = [
 
 const TopSlider = () => {
   return (
-    <div className="relative w-full h-[300px] md:h-[420px] overflow-hidden my-[60px] rounded-xl">
+    <div className="relative w-full h-[250px] md:h-[420px] overflow-hidden my-[60px] md:rounded-xl">
       <Swiper
         modules={[Autoplay, Pagination]}
         autoplay={{ delay: 2500, disableOnInteraction: false }}
