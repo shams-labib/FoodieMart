@@ -19,8 +19,49 @@ const Register = () => {
     const photo = e.target.photo.value;
     const password = e.target.password.value;
 
-    console.log(name, email, photo, password);
+    // ✅ VALIDATION FIRST ✅
+    if (!name || !email || !password) {
+      Swal.fire({
+        icon: "error",
+        title: "Please fill out all fields ❗",
+      });
+      return;
+    }
+
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+    if (!passwordRegex.test(password)) {
+      Swal.fire({
+        icon: "error",
+        title: "Invalid Password!",
+        text: "Must contain uppercase, lowercase & min 6 characters.",
+      });
+      return;
+    }
+
+    if (!tc) {
+      Swal.fire({
+        icon: "error",
+        title: "Agree to the Terms & Conditions ⚠️",
+      });
+      return;
+    }
     createUser(email, password)
+      .then((data) => {
+        console.log(data);
+        navigate("/");
+      })
+      .catch((err) => {
+        console.log(err);
+        Swal.fire({
+          icon: "error",
+          title: "Failed to Register ⚠️",
+          text: err.message,
+        });
+      });
+  };
+
+  const handleGoogleLogin = () => {
+    signInWithGoogle()
       .then((data) => {
         console.log(data);
         navigate("/");
@@ -32,60 +73,19 @@ const Register = () => {
           title: "Failed to login ⚠️",
         });
       });
-
-    if (!name || !email) {
-      Swal.fire({
-        icon: "error",
-        title: "Please fill out all fields",
-      });
-      return;
-    }
-
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
-    if (!passwordRegex.test(password)) {
-      Swal.fire({
-        icon: "error",
-        title: "Invalid Password!",
-        text: "Password must contain at least one uppercase, one lowercase, and be at least 6 characters long.",
-      });
-      return;
-    }
-
-    if (!tc) {
-      Swal.fire({
-        icon: "error",
-        title: "You must agree to the Terms & Conditions ⚠️",
-      });
-      return;
-    }
-  };
-  const handleGoogleLogin = () => {
-    signInWithGoogle()
-      .then((data) => {
-        console.log(data);
-        navigate("/");
-      })
-      .catch((err) => {
-        console.log(err);
-        Swal.fire({
-          icon: "error",
-          title: "Failed to login⚠️",
-        });
-      });
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center p-8 bg-base-100">
       <div className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl w-full max-w-md border border-gray-100 dark:border-gray-700">
         <h2 className="text-3xl font-bold text-center mb-6 text-gray-800 dark:text-gray-100">
-          {" "}
-          Register{" "}
+          Register
         </h2>
+
         <form onSubmit={handleRegister} className="space-y-5">
           <div>
             <label className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-200">
-              {" "}
-              Full Name{" "}
+              Full Name
             </label>
             <input
               name="name"
@@ -97,8 +97,7 @@ const Register = () => {
 
           <div>
             <label className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-200">
-              {" "}
-              Photo URL{" "}
+              Photo URL
             </label>
             <input
               name="photo"
@@ -110,8 +109,7 @@ const Register = () => {
 
           <div>
             <label className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-200">
-              {" "}
-              Email Address{" "}
+              Email Address
             </label>
             <input
               name="email"
@@ -123,24 +121,22 @@ const Register = () => {
 
           <div className="relative">
             <label className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-200">
-              {" "}
-              Password{" "}
+              Password
             </label>
             <input
               type={"password"}
-              placeholder="Enter your password"
+              placeholder="Enter password"
               className="w-full px-4 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-pink-300"
             />
           </div>
           <div className="relative">
             <label className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-200">
-              {" "}
-              Confirm Password{" "}
+              Confirm Password
             </label>
             <input
               name="password"
               type={showPassword ? "text" : "password"}
-              placeholder="Confirm password"
+              placeholder="Enter password"
               className="w-full px-4 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-pink-300"
             />
             <span
@@ -184,6 +180,7 @@ const Register = () => {
             <span className="flex-grow h-px bg-gray-300 dark:bg-gray-600"></span>
           </div>
 
+          {/* Google Login */}
           <button
             type="button"
             onClick={handleGoogleLogin}

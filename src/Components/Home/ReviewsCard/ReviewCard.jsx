@@ -1,17 +1,27 @@
 import React from "react";
 import { IoMdStarOutline } from "react-icons/io";
+import { FaHeart } from "react-icons/fa";
 import { Link } from "react-router";
 
-const ReviewCard = ({ review }) => {
+const ReviewCard = ({ review, handleFavorite }) => {
   return (
     <div className="card bg-base-100 shadow-md rounded-2xl overflow-hidden hover:shadow-2xl transition-shadow duration-300 dark:bg-gray-900 px-7 md:px-0">
-      <figure>
+      <figure className="relative">
         <img
           src={review.foodImage}
           alt={review.foodName}
           className="h-52 w-full object-cover"
         />
+
+        {/* ❤️ Favorite Button */}
+        <button
+          onClick={() => handleFavorite(review)}
+          className="absolute cursor-pointer top-3 right-3 p-2 bg-white/80 backdrop-blur-sm rounded-full shadow hover:scale-110 transition-transform"
+        >
+          <FaHeart className="text-red-600 text-lg" />
+        </button>
       </figure>
+
       <div className="card-body p-5">
         <h2 className="card-title text-lg font-semibold text-gray-800 dark:text-gray-100">
           {review.foodName}
@@ -20,6 +30,7 @@ const ReviewCard = ({ review }) => {
           <span className="font-medium">{review.restaurantName}</span> —{" "}
           {review.location}
         </p>
+
         <div className="flex items-center justify-between mt-3">
           <div className="flex items-center gap-2">
             <img
@@ -31,12 +42,13 @@ const ReviewCard = ({ review }) => {
               {review.userName}
             </span>
           </div>
+
           <div className="flex items-center text-yellow-500">
             <IoMdStarOutline />
-
             <span className="ml-1 text-sm font-semibold">{review.rating}</span>
           </div>
         </div>
+
         <div className="card-actions justify-end mt-4">
           <Link
             to={`/viewDetails/${review._id}`}
