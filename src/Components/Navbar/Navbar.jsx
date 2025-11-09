@@ -36,7 +36,7 @@ const Navbar = () => {
         Home
       </NavLink>
       <NavLink
-        to="/myProducts"
+        to="/allreveiws"
         className={({ isActive }) =>
           `pb-1 transition-all duration-300 ${
             isActive
@@ -48,7 +48,7 @@ const Navbar = () => {
         All Reviews
       </NavLink>
       <NavLink
-        to="/account"
+        to="/myReview"
         className={({ isActive }) =>
           `pb-1 transition-all duration-300 ${
             isActive
@@ -161,8 +161,7 @@ const Navbar = () => {
           ) : (
             <Link
               to={"/login"}
-              className="btn bg-gradient-to-r from-red-400 to-gray-400 text-white 
-              hover:from-blue-500 hover:via-purple-500 hover:to-pink-500 
+              className="btn bg-gradient-to-r from-amber-500 to-orange-600 text-white hover:from-amber-600 hover:to-orange-700 border-none rounded-lg
               transition-all duration-500 ease-in-out shadow-md hover:shadow-lg border-0"
             >
               Login

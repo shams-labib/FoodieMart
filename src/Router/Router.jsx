@@ -3,9 +3,10 @@ import RootLayout from "../Layout/RootLayout";
 import Errorpage from "../Pages/Errorpage/Errorpage";
 import Home from "../Components/Home/Home";
 import MyProducts from "../Pages/MyProducts/MyProducts";
-import Account from "../Pages/Account/Account";
 import Login from "../Firebase and Login/Login/Login";
 import Register from "../Firebase and Login/Register/Register";
+import AllReviews from "../Pages/All reviews/AllReviews";
+import MyReviews from "../Pages/My Reviews/myReviews";
 
 const router = createBrowserRouter([
   {
@@ -18,12 +19,16 @@ const router = createBrowserRouter([
         element: <Home></Home>,
       },
       {
-        path: "myProducts",
+        path: "/myProducts",
         element: <MyProducts></MyProducts>,
       },
       {
-        path: "/account",
-        element: <Account></Account>,
+        path: "/allreveiws",
+        element: <AllReviews></AllReviews>,
+      },
+      {
+        path: "/myReview",
+        element: <MyReviews></MyReviews>,
       },
       {
         path: "/login",
