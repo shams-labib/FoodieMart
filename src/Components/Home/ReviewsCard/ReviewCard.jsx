@@ -5,7 +5,7 @@ import { Link } from "react-router";
 const ReviewCard = ({ review }) => {
   //   console.log(review);
   return (
-    <div className="card bg-base-100 shadow-md rounded-2xl overflow-hidden hover:shadow-2xl transition-shadow duration-300 dark:bg-gray-900">
+    <div className="card bg-base-100 shadow-md rounded-2xl overflow-hidden hover:shadow-2xl transition-shadow duration-300 dark:bg-gray-900 px-7 md:px-0">
       <figure>
         <img
           src={review.foodImage}
