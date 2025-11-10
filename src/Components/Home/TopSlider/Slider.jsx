@@ -30,7 +30,7 @@ const Slider = ({ slider }) => {
                 </h2>
                 <p className="text-lg mb-4">{item.subtitle}</p>
 
-                <button className="btn bg-red-600 border-none text-white hover:bg-red-700 px-6">
+                <button className="btn bg-gradient-to-r from-amber-500 to-orange-600 text-white hover:from-amber-600 hover:to-orange-700 border-none rounded-lg px-6">
                   Order Now
                 </button>
               </div>

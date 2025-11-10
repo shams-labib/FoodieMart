@@ -6,25 +6,28 @@ import { Link, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import { AuthContext } from "../Firebase content/Auth/AuthContext";
 import { Helmet } from "react-helmet-async";
+import { updateProfile } from "firebase/auth";
 
 const Register = () => {
   const { createUser, signInWithGoogle } = useContext(AuthContext);
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [tc, setTc] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleRegister = (e) => {
     e.preventDefault();
+    setLoading(true);
+
     const name = e.target.name.value;
     const email = e.target.email.value;
     const photo = e.target.photo.value;
     const password = e.target.password.value;
+    const confirmPassword = e.target.confirmPassword.value;
 
     if (!name || !email || !password) {
-      Swal.fire({
-        icon: "error",
-        title: "Please fill out all fields ❗",
-      });
+      Swal.fire({ icon: "error", title: "Please fill out all fields ❗" });
+      setLoading(false);
       return;
     }
 
@@ -33,8 +36,18 @@ const Register = () => {
       Swal.fire({
         icon: "error",
         title: "Invalid Password!",
-        text: "Must contain uppercase, lowercase & min 6 characters.",
+        text: "Must contain uppercase, lowercase & minimum 6 characters.",
       });
+      setLoading(false);
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      Swal.fire({
+        icon: "error",
+        title: "Passwords do not match ❌",
+      });
+      setLoading(false);
       return;
     }
 
@@ -43,31 +56,37 @@ const Register = () => {
         icon: "error",
         title: "Agree to the Terms & Conditions ⚠️",
       });
+      setLoading(false);
       return;
     }
+
     createUser(email, password)
-      .then((data) => {
-        console.log(data);
+      .then((result) => {
+        const user = result.user;
+
+        updateProfile(user, {
+          displayName: name,
+          photoURL: photo,
+        });
+
         navigate("/");
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
         Swal.fire({
           icon: "error",
           title: "Failed to Register ⚠️",
           text: err.message,
         });
-      });
+      })
+      .finally(() => setLoading(false));
   };
 
   const handleGoogleLogin = () => {
     signInWithGoogle()
-      .then((data) => {
-        console.log(data);
-        navigate("/");
-      })
+      .then(() => navigate("/"))
       .catch((err) => {
-        console.log(err);
+        console.error(err);
         Swal.fire({
           icon: "error",
           title: "Failed to login ⚠️",
@@ -80,129 +99,87 @@ const Register = () => {
       data-aos="fade-right"
       className="min-h-screen flex items-center justify-center p-8 bg-base-100"
     >
-      <div>
-        <Helmet>
-          <title>Register || FoodieMart</title>
-        </Helmet>
-      </div>
-      <div className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl w-full max-w-md border border-gray-100 dark:border-gray-700">
-        <h2 className="text-3xl font-bold text-center mb-6 text-gray-800 dark:text-gray-100">
-          Register
-        </h2>
+      <Helmet>
+        <title>Register || FoodieMart</title>
+      </Helmet>
+
+      <div className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl w-full max-w-md border">
+        <h2 className="text-3xl font-bold text-center mb-6">Register</h2>
 
         <form onSubmit={handleRegister} className="space-y-5">
-          <div>
-            <label className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-200">
-              Full Name
-            </label>
-            <input
-              name="name"
-              type="text"
-              placeholder="Enter your name"
-              className="w-full px-4 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-pink-300"
-            />
-          </div>
+          <input
+            name="name"
+            type="text"
+            placeholder="Full Name"
+            className="input input-bordered w-full"
+          />
+          <input
+            name="photo"
+            type="text"
+            placeholder="Photo URL"
+            className="input input-bordered w-full"
+          />
 
-          <div>
-            <label className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-200">
-              Photo URL
-            </label>
-            <input
-              name="photo"
-              type="text"
-              placeholder="Photo URL"
-              className="w-full px-4 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-pink-300"
-            />
-          </div>
-
-          <div>
-            <label className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-200">
-              Email Address
-            </label>
-            <input
-              name="email"
-              type="email"
-              placeholder="Enter your email"
-              className="w-full px-4 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-pink-300"
-            />
-          </div>
+          <input
+            name="email"
+            type="email"
+            placeholder="Email Address"
+            className="input input-bordered w-full"
+          />
 
           <div className="relative">
-            <label className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-200">
-              Password
-            </label>
-            <input
-              type={"password"}
-              placeholder="Enter password"
-              className="w-full px-4 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-pink-300"
-            />
-          </div>
-          <div className="relative">
-            <label className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-200">
-              Confirm Password
-            </label>
             <input
               name="password"
               type={showPassword ? "text" : "password"}
-              placeholder="Enter password"
-              className="w-full px-4 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-pink-300"
+              placeholder="Password"
+              className="input input-bordered w-full"
             />
+          </div>
+
+          <div className="relative">
+            <input
+              name="confirmPassword"
+              type={showPassword ? "text" : "password"}
+              placeholder="Confirm Password"
+              className="input input-bordered w-full"
+            />
+
             <span
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-9 text-xl text-gray-600 dark:text-gray-300 cursor-pointer"
+              className="absolute right-3 top-3 text-xl cursor-pointer"
             >
               {showPassword ? <FaEye /> : <LuEyeClosed />}
             </span>
           </div>
 
-          <div className="flex items-center space-x-2">
+          <label className="flex items-center gap-2 text-sm cursor-pointer">
             <input
               type="checkbox"
               checked={tc}
               onChange={(e) => setTc(e.target.checked)}
-              className="w-4 h-4 text-pink-500 border-gray-300 dark:border-gray-600 rounded focus:ring-pink-400"
             />
-            <label className="text-sm text-gray-600 dark:text-gray-300">
-              I agree to the{" "}
-              <a
-                href="#"
-                className="underline text-pink-600 dark:text-pink-400"
-              >
-                Terms & Conditions
-              </a>
-            </label>
-          </div>
+            I agree to the{" "}
+            <span className="text-blue-600 underline">Terms & Conditions</span>
+          </label>
 
           <button
-            type="submit"
-            className="w-full bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 border-none py-2 rounded-md text-white font-semibold hover:scale-105 transition-transform duration-300 shadow-md cursor-pointer"
+            disabled={loading}
+            className="btn w-full bg-gradient-to-r from-amber-500 to-orange-600 text-white"
           >
-            Register 🚀
+            {loading ? "Processing..." : "Register 🚀"}
           </button>
-
-          <div className="flex items-center w-full gap-2">
-            <span className="flex-grow h-px bg-gray-300 dark:bg-gray-600"></span>
-            <span className="text-gray-600 dark:text-gray-300 font-semibold text-sm">
-              OR
-            </span>
-            <span className="flex-grow h-px bg-gray-300 dark:bg-gray-600"></span>
-          </div>
-
           {/* Google Login */}
           <button
             type="button"
             onClick={handleGoogleLogin}
-            className="flex items-center justify-center gap-2 font-bold w-full border border-gray-300 dark:border-gray-600 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+            className="btn btn-outline w-full flex gap-2"
           >
             <FcGoogle size={25} /> Continue with Google
           </button>
 
-          <p className="text-center text-sm text-gray-600 dark:text-gray-300">
+          <p className="text-center text-sm">
             Already have an account?{" "}
-            <Link
-              className="text-blue-500 dark:text-blue-400 font-semibold hover:text-blue-700 dark:hover:text-blue-300"
-              to={"/login"}
-            >
+            <Link className="text-blue-500 font-semibold" to={"/login"}>
               Login Now
             </Link>
           </p>

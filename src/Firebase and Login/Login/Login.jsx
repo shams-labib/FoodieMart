@@ -9,7 +9,7 @@ import { Helmet } from "react-helmet-async";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const { signInWithGoogle, signInUser } = useContext(AuthContext);
+  const { signInWithGoogle, signInUser, setLoading } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -28,6 +28,7 @@ const Login = () => {
           icon: "error",
           title: "Something went wrong",
         });
+        setLoading(false);
       });
   };
 
@@ -39,7 +40,7 @@ const Login = () => {
     signInUser(email, password)
       .then((data) => {
         console.log(data);
-        navigate(from, { replace: true }); // redirect to intended page
+        navigate(from, { replace: true });
       })
       .catch((err) => {
         console.log(err);

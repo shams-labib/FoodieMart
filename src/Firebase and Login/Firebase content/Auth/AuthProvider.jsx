@@ -7,6 +7,7 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
+  updateProfile,
 } from "firebase/auth";
 import { auth } from "../_firebase.init";
 
@@ -17,66 +18,52 @@ const AuthProvider = ({ children }) => {
 
   const createUser = async (email, password) => {
     setLoading(true);
-    try {
-      const result = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      return result;
-    } catch {
-      setLoading(false);
-      throw Error;
-    }
+    return createUserWithEmailAndPassword(auth, email, password);
+  };
+
+  const updateUserProfile = async (name, photo) => {
+    if (!auth.currentUser) return;
+    return updateProfile(auth.currentUser, {
+      displayName: name,
+      photoURL: photo,
+    });
   };
 
   const signInUser = async (email, password) => {
     setLoading(true);
-    try {
-      const result = await signInWithEmailAndPassword(auth, email, password);
-      return result;
-    } catch {
-      setLoading(false);
-      throw Error;
-    }
+    return signInWithEmailAndPassword(auth, email, password);
   };
 
   const signInWithGoogle = () => {
     setLoading(true);
-    return signInWithPopup(auth, googleProvider)
-      .then((result) => {
-        setUser(result.user);
-        setLoading(false);
-        return result;
-      })
-      .catch((error) => {
-        setLoading(false);
-        throw error;
-      });
+    return signInWithPopup(auth, googleProvider);
   };
 
   const signOutUser = () => {
     setLoading(true);
-    return signOut(auth).finally(() => setLoading(false));
+    return signOut(auth);
   };
+
   useEffect(() => {
     const unsubscriber = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       setLoading(false);
     });
-    return () => unsubscriber;
+    return () => unsubscriber();
   }, []);
 
   const info = {
     createUser,
+    updateUserProfile,
     signInUser,
-    loading,
     signOutUser,
     signInWithGoogle,
+    loading,
     user,
+    setLoading,
   };
 
-  return <AuthContext value={info}>{children}</AuthContext>;
+  return <AuthContext.Provider value={info}>{children}</AuthContext.Provider>;
 };
 
 export default AuthProvider;
