@@ -18,7 +18,7 @@ const ViewDetails = () => {
   const foodData = mainData.filter((item) => item._id === id);
 
   return (
-    <div>
+    <div data-aos="fade-up">
       <div>
         <Helmet>
           <title>ViewDetails || FoodieMart</title>

@@ -28,7 +28,10 @@ const ResturentData = () => {
   }
 
   return (
-    <section className="py-16 px-6 bg-gradient-to-b from-yellow-100 to-orange-100 dark:from-gray-900 dark:to-gray-800 md:rounded-xl my-[50px]">
+    <section
+      data-aos="fade-up"
+      className="py-16 px-6 bg-gradient-to-b from-yellow-100 to-orange-100 dark:from-gray-900 dark:to-gray-800 md:rounded-xl my-[50px]"
+    >
       <h1 className="text-5xl font-extrabold text-center mb-6 text-gray-900 dark:text-gray-100">
         Welcome to FoodieMart 🍔
       </h1>

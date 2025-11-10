@@ -14,7 +14,10 @@ const MyFavorites = ({ item, handleDelete }) => {
   } = item;
 
   return (
-    <div className="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300">
+    <div
+      data-aos="fade-up"
+      className="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300"
+    >
       <div>
         <Helmet>
           <title>My Favorite || FoodieMart</title>

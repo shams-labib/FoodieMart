@@ -76,7 +76,10 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-8 bg-base-100">
+    <div
+      data-aos="fade-right"
+      className="min-h-screen flex items-center justify-center p-8 bg-base-100"
+    >
       <div>
         <Helmet>
           <title>Register || FoodieMart</title>

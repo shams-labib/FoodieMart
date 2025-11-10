@@ -51,7 +51,10 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-8 bg-base-100">
+    <div
+      data-aos="fade-left"
+      className="min-h-screen flex items-center justify-center p-8 bg-base-100"
+    >
       <div>
         <Helmet>
           <title>Login || FoodieMart</title>
