@@ -71,6 +71,18 @@ const Navbar = () => {
       >
         My Favorites
       </NavLink>
+
+      <div className="flex items-center justify-between mt-2 bg-base-200 p-2 rounded-lg md:hidden">
+        <span className="text-sm font-medium">
+          {theme === "dark" ? "Dark Mode" : "Light Mode"}
+        </span>
+        <input
+          type="checkbox"
+          onChange={handleTheme}
+          checked={theme === "dark"}
+          className="toggle toggle-sm"
+        />
+      </div>
     </>
   );
 
@@ -97,7 +109,7 @@ const Navbar = () => {
             </div>
             <ul
               tabIndex="-1"
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 p-2 shadow w-40"
+              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 p-2 shadow w-48"
             >
               {links}
             </ul>
@@ -131,7 +143,7 @@ const Navbar = () => {
           </div>
 
           {loading ? (
-            <Loader></Loader>
+            <Loader />
           ) : user ? (
             <>
               <div className="relative">

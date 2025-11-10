@@ -3,7 +3,7 @@ import { useContext, useEffect } from "react";
 import { AuthContext } from "../../Firebase and Login/Firebase content/Auth/AuthContext";
 
 const instance = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: "https://assignment-10-gamma-three.vercel.app",
 });
 
 const useAxiosSecure = () => {
