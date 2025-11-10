@@ -9,7 +9,7 @@ const AllReviews = () => {
   const [allData, setAllData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [query, setQuery] = useState(""); // 🔍 search text
+  const [query, setQuery] = useState("");
   const [searching, setSearching] = useState(false);
 
   useEffect(() => {

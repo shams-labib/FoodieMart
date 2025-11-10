@@ -19,7 +19,6 @@ const Register = () => {
     const photo = e.target.photo.value;
     const password = e.target.password.value;
 
-    // ✅ VALIDATION FIRST ✅
     if (!name || !email || !password) {
       Swal.fire({
         icon: "error",

@@ -15,7 +15,6 @@ const Reviews = ({ data }) => {
           </tr>
         </thead>
         <tbody>
-          {/* <!-- Example row --> */}
           <tr className="hover:bg-gray-50">
             <td>
               <img
@@ -32,8 +31,6 @@ const Reviews = ({ data }) => {
               <button className="btn btn-sm btn-error">Delete</button>
             </td>
           </tr>
-
-          {/* <!-- Add more rows dynamically --> */}
         </tbody>
       </table>
     </div>

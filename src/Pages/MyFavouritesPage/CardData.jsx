@@ -13,7 +13,6 @@ const CardData = () => {
     });
   }, [axiosSecure]);
 
-  // ✅ delete handler
   const handleDelete = (id) => {
     axiosSecure.delete(`/my-favourite/${id}`).then((res) => {
       if (res.data.deletedCount > 0) {
@@ -22,7 +21,6 @@ const CardData = () => {
           text: "Item removed from your favorites.",
           icon: "success",
         });
-        // ✅ update UI instantly
         const remaining = data.filter((item) => item._id !== id);
         setData(remaining);
       }
@@ -37,11 +35,7 @@ const CardData = () => {
 
       <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {data.map((item) => (
-          <MyFavorites
-            key={item._id}
-            item={item}
-            handleDelete={handleDelete} // ✅ send function as prop
-          />
+          <MyFavorites key={item._id} item={item} handleDelete={handleDelete} />
         ))}
       </div>
     </div>

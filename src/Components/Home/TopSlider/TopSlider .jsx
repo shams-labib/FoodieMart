@@ -41,7 +41,6 @@ const TopSlider = () => {
                 alt="slider"
               />
 
-              {/* Text Over Image */}
               <div className="absolute inset-0 bg-black/40 flex flex-col justify-center items-center text-center text-white px-6">
                 <h2 className="text-3xl md:text-4xl font-bold mb-2 drop-shadow-lg">
                   {item.title}
