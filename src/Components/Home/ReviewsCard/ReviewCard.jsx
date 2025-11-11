@@ -30,7 +30,7 @@ const ReviewCard = ({ review }) => {
       location: review.location,
       rating: review.rating,
       reviewText: review.reviewText,
-      userEmail: review.userEmail,
+      userEmail: user.email,
       userName: review.userName,
       userPhoto: review.userPhoto,
       createdAt: new Date(),

@@ -4,6 +4,7 @@ import { AuthContext } from "../../Firebase and Login/Firebase content/Auth/Auth
 
 const instance = axios.create({
   baseURL: "https://assignment-10-gamma-three.vercel.app",
+  // https://assignment-10-gamma-three.vercel.app
 });
 
 const useAxiosSecure = () => {

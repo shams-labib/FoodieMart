@@ -1,17 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import useAxiosSecure from "../../Hooks/AxiosSecure/AxiosSecure";
 import Swal from "sweetalert2";
 import MyFavorites from "./MyFavourites";
+import { AuthContext } from "../../Firebase and Login/Firebase content/Auth/AuthContext";
 
 const CardData = () => {
   const axiosSecure = useAxiosSecure();
   const [data, setData] = useState([]);
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
-    axiosSecure.get("/my-favourite").then((res) => {
-      setData(res.data);
-    });
-  }, [axiosSecure]);
+    if (!user?.email) return;
+    axiosSecure
+      .get(`/my-favourite?email=${user.email}`)
+      .then((res) => setData(res.data))
+      .catch((err) => console.log(err));
+  }, [user?.email, axiosSecure]);
 
   const handleDelete = (id) => {
     axiosSecure.delete(`/my-favourite/${id}`).then((res) => {
