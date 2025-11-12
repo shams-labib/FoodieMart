@@ -8,7 +8,7 @@ const Footer = () => {
     <footer className="footer md:flex md:justify-around md:items-center sm:footer-horizontal bg-base-300 text-base-content p-10">
       <nav>
         <img className="w-15 h-15 rounded-full" src={logo} alt="" />
-        <span className="lg:text-2xl text-sm font-bold bg-gradient-to-r from-pink-500 to-blue-500 bg-clip-text text-transparent">
+        <span className="lg:text-2xl text-sm font-bold bg-gradient-to-r from-amber-500 to-orange-600  hover:from-amber-600 hover:to-orange-700 bg-clip-text text-transparent">
           FoodieMart
         </span>
       </nav>

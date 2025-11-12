@@ -143,7 +143,10 @@ const AddReview = () => {
             </div>
 
             <div className="flex justify-center pt-4">
-              <button type="submit" className="btn btn-primary w-full">
+              <button
+                type="submit"
+                className="btn btn-primary w-full bg-gradient-to-r from-amber-500 to-orange-600  hover:from-amber-600 hover:to-orange-700 border-none"
+              >
                 Submit Review
               </button>
             </div>
