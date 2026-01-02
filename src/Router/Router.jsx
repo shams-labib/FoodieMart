@@ -1,3 +1,4 @@
+// router.js
 import { createBrowserRouter } from "react-router";
 import RootLayout from "../Layout/RootLayout";
 import Errorpage from "../Pages/Errorpage/Errorpage";
@@ -5,71 +6,92 @@ import Home from "../Components/Home/Home";
 import Login from "../Firebase and Login/Login/Login";
 import Register from "../Firebase and Login/Register/Register";
 import AllReviews from "../Pages/All reviews/AllReviews";
-import MyReviews from "../Pages/My Reviews/myReviews";
 import AddReview from "../Profile Section/Add Review/AddReview";
 import MyReviewPage from "../Profile Section/My Review/MyReview";
 import PrivateRoute from "../Hooks/PrivateRoute/PrivateRoute";
 import Update from "../Profile Section/My Review/Update";
 import ViewDetails from "../Pages/ViewDetails/ViewDetails";
 import CardData from "../Pages/MyFavouritesPage/CardData";
+import DashboardLayout from "../Dashboard/DashboardLayout/DashboardLayout";
+import DashboardHome from "../Dashboard/DashboardHome/DashboardHome";
 
 const router = createBrowserRouter([
   {
-    element: <RootLayout></RootLayout>,
-    errorElement: <Errorpage></Errorpage>,
+    path: "/",
+    element: <RootLayout />,
+    errorElement: <Errorpage />,
     children: [
       {
-        path: "/",
         index: true,
-        element: <Home></Home>,
+        element: <Home />,
       },
       {
-        path: "/allreveiws",
-        element: <AllReviews></AllReviews>,
+        path: "allreviews",
+        element: <AllReviews />,
       },
       {
-        path: "/add-review",
+        path: "add-review",
         element: (
           <PrivateRoute>
-            <AddReview></AddReview>
+            <AddReview />
           </PrivateRoute>
         ),
       },
       {
-        path: "/myReview",
+        path: "myReview",
         element: (
           <PrivateRoute>
-            <MyReviewPage></MyReviewPage>
+            <MyReviewPage />
           </PrivateRoute>
         ),
       },
       {
-        path: "/update/:id",
-        element: <Update></Update>,
+        path: "update/:id",
+        element: <Update />,
       },
       {
-        path: "/viewDetails/:id",
+        path: "viewDetails/:id",
         element: (
           <PrivateRoute>
-            <ViewDetails></ViewDetails>
+            <ViewDetails />
           </PrivateRoute>
         ),
       },
       {
-        path: "/myFavouritePage",
+        path: "myFavouritePage",
         element: (
           <PrivateRoute>
-            <CardData></CardData>
+            <CardData />
           </PrivateRoute>
         ),
       },
       {
-        path: "/login",
-        element: <Login></Login>,
+        path: "login",
+        element: <Login />,
       },
       {
-        path: "/register",
-        element: <Register></Register>,
+        path: "register",
+        element: <Register />,
+      },
+    ],
+  },
+
+  // DASHBOARD (Protected Layout)
+  {
+    path: "dashboard",
+    element: (
+      <PrivateRoute>
+        <DashboardLayout />
+      </PrivateRoute>
+    ),
+    children: [
+      {
+        index: true,
+        element: <DashboardHome />,
+      },
+      {
+        path: "home",
+        element: <DashboardHome />,
       },
     ],
   },

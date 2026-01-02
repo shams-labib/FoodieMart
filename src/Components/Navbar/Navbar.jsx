@@ -6,207 +6,137 @@ import { AuthContext } from "../../Firebase and Login/Firebase content/Auth/Auth
 import Loader from "../../Loader/Loader";
 
 const Navbar = () => {
-  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
-  const [open, setOpen] = useState(false);
   const { user, signOutUser, loading } = useContext(AuthContext);
+  const [open, setOpen] = useState(false);
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
 
   useEffect(() => {
-    const html = document.querySelector("html");
-    html.setAttribute("data-theme", theme);
+    document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
   }, [theme]);
 
-  const handleTheme = (e) => {
-    const checked = e.target.checked;
-    setTheme(checked ? "dark" : "light");
-  };
-
-  const links = (
-    <>
-      <NavLink
-        to="/"
-        className={({ isActive }) =>
-          `pb-1 transition-all duration-300 ${
-            isActive
-              ? "border-b-2 border-blue-500 text-blue-500"
-              : "hover:border-b-2 hover:border-blue-300"
-          }`
-        }
-      >
-        Home
-      </NavLink>
-      <NavLink
-        to="/allreveiws"
-        className={({ isActive }) =>
-          `pb-1 transition-all duration-300 ${
-            isActive
-              ? "border-b-2 border-blue-500 text-blue-500"
-              : "hover:border-b-2 hover:border-blue-300"
-          }`
-        }
-      >
-        All Reviews
-      </NavLink>
-      <NavLink
-        to="/myReview"
-        className={({ isActive }) =>
-          `pb-1 transition-all duration-300 ${
-            isActive
-              ? "border-b-2 border-blue-500 text-blue-500"
-              : "hover:border-b-2 hover:border-blue-300"
-          }`
-        }
-      >
-        My Review
-      </NavLink>
-      <NavLink
-        to="/myFavouritePage"
-        className={({ isActive }) =>
-          `pb-1 transition-all duration-300 ${
-            isActive
-              ? "border-b-2 border-blue-500 text-blue-500"
-              : "hover:border-b-2 hover:border-blue-300"
-          }`
-        }
-      >
-        My Favorites
-      </NavLink>
-
-      <div className="flex items-center justify-between mt-2 bg-base-200 p-2 rounded-lg lg:hidden">
-        <span className="text-sm font-medium">
-          {theme === "dark" ? "Dark Mode" : "Light Mode"}
-        </span>
-        <input
-          type="checkbox"
-          onChange={handleTheme}
-          checked={theme === "dark"}
-          className="toggle toggle-sm"
-        />
-      </div>
-    </>
-  );
+  const navLinkStyle = ({ isActive }) =>
+    `px-3 py-2 rounded-lg transition ${
+      isActive ? "bg-amber-500 text-white" : "hover:bg-base-200"
+    }`;
 
   return (
-    <div className="sticky top-0 z-50 backdrop-blur-md bg-white/60 shadow-sm transition-all duration-300">
-      <div className="navbar md:w-10/12 mx-auto">
+    <header className="sticky top-0 z-50 w-full bg-white/70 backdrop-blur-md shadow">
+      <nav className="navbar max-w-7xl mx-auto px-4">
+        {/* LEFT */}
         <div className="navbar-start">
-          <div className="dropdown">
-            <div
-              tabIndex={0}
-              role="button"
-              className="lg:hidden cursor-pointer p-2 rounded-xl hover:bg-base-200 active:scale-95 transition-all duration-200"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-7 w-7"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h10M4 18h16"
-                />
-              </svg>
-            </div>
-
+          <div className="dropdown lg:hidden">
+            <label tabIndex={0} className="btn btn-ghost">
+              ☰
+            </label>
             <ul
-              tabIndex="-1"
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 p-2 shadow w-48"
+              tabIndex={0}
+              className="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
             >
-              {links}
+              <NavLink to="/" className={navLinkStyle}>
+                Home
+              </NavLink>
+              <NavLink to="/allreviews" className={navLinkStyle}>
+                All Reviews
+              </NavLink>
+
+              {user && (
+                <>
+                  <NavLink to="/dashboard" className={navLinkStyle}>
+                    Dashboard
+                  </NavLink>
+                  <NavLink to="/myReview" className={navLinkStyle}>
+                    My Review
+                  </NavLink>
+                  <NavLink to="/myFavouritePage" className={navLinkStyle}>
+                    Favorites
+                  </NavLink>
+                </>
+              )}
             </ul>
           </div>
 
-          <Link to={"/"} className="flex items-center justify-center gap-2">
-            <img className="w-10 h-10 rounded-full" src={logo} alt="" />
-            <span className="lg:text-2xl text-sm font-bold bg-gradient-to-r from-amber-500 to-orange-600  hover:from-amber-600 hover:to-orange-700 bg-clip-text text-transparent">
+          <Link to="/" className="flex items-center gap-2">
+            <img src={logo} className="w-10 h-10 rounded-full" />
+            <span className="text-xl font-bold text-orange-600">
               FoodieMart
             </span>
           </Link>
         </div>
 
+        {/* CENTER */}
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1 gap-7 text-[14px] font-semibold">
-            {links}
+          <ul className="menu menu-horizontal gap-2 font-medium">
+            <NavLink to="/" className={navLinkStyle}>
+              Home
+            </NavLink>
+            <NavLink to="/allreviews" className={navLinkStyle}>
+              All Reviews
+            </NavLink>
+
+            {user && (
+              <>
+                <NavLink to="/dashboard" className={navLinkStyle}>
+                  Dashboard
+                </NavLink>
+                <NavLink to="/myReview" className={navLinkStyle}>
+                  My Review
+                </NavLink>
+                <NavLink to="/myFavouritePage" className={navLinkStyle}>
+                  Favorites
+                </NavLink>
+              </>
+            )}
           </ul>
         </div>
 
-        <div className="navbar-end flex items-center gap-3">
-          <div className="hidden lg:flex items-center gap-2">
-            <input
-              type="checkbox"
-              onChange={handleTheme}
-              checked={theme === "dark"}
-              className="toggle toggle-sm"
-            />
-            <span className="text-sm">
-              {theme === "dark" ? "Dark" : "Light"}
-            </span>
-          </div>
+        {/* RIGHT */}
+        <div className="navbar-end gap-3">
+          <input
+            type="checkbox"
+            className="toggle toggle-sm"
+            checked={theme === "dark"}
+            onChange={(e) => setTheme(e.target.checked ? "dark" : "light")}
+          />
 
           {loading ? (
             <Loader />
           ) : user ? (
-            <>
-              <div className="relative">
-                <button
-                  onClick={() => setOpen(!open)}
-                  className="btn btn-ghost p-0 rounded-full"
-                >
-                  <img
-                    src={user.photoURL || userImg}
-                    alt="User"
-                    className="w-10 h-10 rounded-full"
-                  />
-                </button>
-
-                {open && (
-                  <ul className="absolute right-0 mt-2 w-40 bg-base-100 shadow-lg rounded-lg menu">
-                    <li>
-                      <Link to="/add-review" onClick={() => setOpen(false)}>
-                        Add Review
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/myReview" onClick={() => setOpen(false)}>
-                        My Review
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        to="/myFavouritePage"
-                        onClick={() => setOpen(false)}
-                      >
-                        My Favorites
-                      </Link>
-                    </li>
-                    <li>
-                      <button
-                        className="btn bg-gradient-to-r from-amber-500 to-orange-600  hover:from-amber-600 hover:to-orange-700 text-white"
-                        onClick={signOutUser}
-                      >
-                        Sign Out
-                      </button>
-                    </li>
-                  </ul>
-                )}
-              </div>
-            </>
+            <div className="dropdown dropdown-end">
+              <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+                <img
+                  src={user.photoURL || userImg}
+                  className="w-10 rounded-full"
+                />
+              </label>
+              <ul
+                tabIndex={0}
+                className="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-44"
+              >
+                <li>
+                  <Link to="/dashboard">Dashboard</Link>
+                </li>
+                <li>
+                  <Link to="/myReview">My Review</Link>
+                </li>
+                <li>
+                  <button onClick={signOutUser} className="text-red-500">
+                    Logout
+                  </button>
+                </li>
+              </ul>
+            </div>
           ) : (
             <Link
-              to={"/login"}
-              className="btn bg-gradient-to-r from-amber-500 to-orange-600 text-white hover:from-amber-600 hover:to-orange-700 border-none rounded-lg
-              transition-all duration-500 ease-in-out shadow-md hover:shadow-lg border-0"
+              to="/login"
+              className="btn bg-orange-500 text-white hover:bg-orange-600"
             >
               Login
             </Link>
           )}
         </div>
-      </div>
-    </div>
+      </nav>
+    </header>
   );
 };
 
