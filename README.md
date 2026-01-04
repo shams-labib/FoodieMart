@@ -1,6 +1,6 @@
 # 🍔 FoodieHub – Fast & Fresh Food Delivery App
 
-## Live Site URL: https://foodiemart001.netlify.app
+## Live Site URL: https://assignemnt-10-8c38a.web.app
 
 ## 🚀 About This Project
 
