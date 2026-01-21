@@ -11,41 +11,55 @@ const Sidebar = () => {
     }
   };
 
+  const menuItems = [
+    { name: "Overview", path: "/dashboard" },
+    ...(role === "admin"
+      ? [
+          { title: "Your Dashboard" },
+          { name: "Home", path: "/" },
+          { name: "Profile", path: "profile" },
+          { name: "My Order", path: "my-order" },
+          { name: "Analytics", path: "admin" },
+          { name: "Payment History", path: "payment-history" },
+          { name: "Add Review", path: "add-review" },
+        ]
+      : []),
+  ];
+
   return (
-    <aside className="w-64 min-h-full bg-base-100 shadow">
-      <ul className="menu p-4">
-        <li className="menu-title">Dashboard</li>
-        <li>
-          <NavLink to="/dashboard" onClick={handleLinkClick}>
-            Overview
-          </NavLink>
-        </li>
-
-        {role === "user" && (
-          <>
-            <li className="menu-title">User Menu</li>
-            <li>
-              <NavLink onClick={handleLinkClick}>My Orders</NavLink>
+    <aside className="bg-white dark:bg-gray-900 w-64 md:w-64 h-screen shadow-md fixed md:static z-50 transform md:translate-x-0 transition-transform duration-300 ease-in-out">
+      <div className="p-4 border-b border-gray-200 dark:border-gray-700">
+        <h1 className="text-xl font-bold text-gray-800 dark:text-gray-100">
+          Dashboard
+        </h1>
+      </div>
+      <ul className="flex flex-col p-4 space-y-2">
+        {menuItems.map((item, index) =>
+          item.title ? (
+            <li
+              key={index}
+              className="text-gray-500 dark:text-gray-400 uppercase text-xs mt-4 mb-1"
+            >
+              {item.title}
             </li>
-            <li>
-              <NavLink onClick={handleLinkClick}>Wishlist</NavLink>
+          ) : (
+            <li key={index}>
+              <NavLink
+                to={item.path}
+                onClick={handleLinkClick}
+                className={({ isActive }) =>
+                  `block px-4 py-2 rounded-lg transition-colors duration-200 
+                  ${
+                    isActive
+                      ? "bg-blue-500 text-white"
+                      : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                  }`
+                }
+              >
+                {item.name}
+              </NavLink>
             </li>
-          </>
-        )}
-
-        {role === "admin" && (
-          <>
-            <li className="menu-title">Admin Menu</li>
-            <li>
-              <NavLink onClick={handleLinkClick}>Manage Users</NavLink>
-            </li>
-            <li>
-              <NavLink onClick={handleLinkClick}>Manage Orders</NavLink>
-            </li>
-            <li>
-              <NavLink onClick={handleLinkClick}>Analytics</NavLink>
-            </li>
-          </>
+          )
         )}
       </ul>
     </aside>

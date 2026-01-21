@@ -16,11 +16,6 @@ const ReviewCard = ({ review }) => {
   const ratingValue = Number(review.rating) || 0;
 
   const handleViewDetails = () => {
-    if (!user) {
-      return navigate("/login", {
-        state: { from: `/viewDetails/${review._id}` },
-      });
-    }
     navigate(`/viewDetails/${review._id}`);
   };
 

@@ -13,7 +13,14 @@ import Update from "../Profile Section/My Review/Update";
 import ViewDetails from "../Pages/ViewDetails/ViewDetails";
 import CardData from "../Pages/MyFavouritesPage/CardData";
 import DashboardLayout from "../Dashboard/DashboardLayout/DashboardLayout";
+
+import MyOrders from "../Pages/My Order/MyOrders";
+import UsersManagement from "../Pages/UsersManagement/UsersManagement";
+import PaymentHistory from "../Dashboard/PaymentHistory/PaymentHistory";
+import MyProfile from "../Dashboard/Profile/MyProfile";
+import AdminDashboard from "../Dashboard/AdminDashboard/AdminDashboard";
 import DashboardHome from "../Dashboard/DashboardHome/DashboardHome";
+import ContactUs from "../Pages/Contact Us/ContactUs";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +31,10 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Home />,
+      },
+      {
+        path: "/contact",
+        Component: ContactUs,
       },
       {
         path: "allreviews",
@@ -37,6 +48,7 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+      // Modified
       {
         path: "myReview",
         element: (
@@ -51,11 +63,7 @@ const router = createBrowserRouter([
       },
       {
         path: "viewDetails/:id",
-        element: (
-          <PrivateRoute>
-            <ViewDetails />
-          </PrivateRoute>
-        ),
+        element: <ViewDetails />,
       },
       {
         path: "myFavouritePage",
@@ -87,11 +95,32 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <DashboardHome />,
+        Component: DashboardHome,
+      },
+
+      {
+        path: "add-review",
+        Component: AddReview,
       },
       {
-        path: "home",
-        element: <DashboardHome />,
+        path: "profile",
+        Component: MyProfile,
+      },
+      {
+        path: "my-order",
+        Component: MyOrders,
+      },
+      {
+        path: "users-management",
+        Component: UsersManagement,
+      },
+      {
+        path: "payment-history",
+        Component: PaymentHistory,
+      },
+      {
+        path: "admin",
+        Component: AdminDashboard,
       },
     ],
   },

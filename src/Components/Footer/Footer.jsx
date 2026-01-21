@@ -1,71 +1,117 @@
 import React from "react";
 import logo from "../../assets/logo.png";
-import { Link } from "react-router";
-import { FaXTwitter } from "react-icons/fa6";
+import { FaTwitter, FaFacebookF, FaLinkedinIn } from "react-icons/fa";
+import { motion } from "framer-motion";
 
 const Footer = () => {
   return (
-    <footer className="footer md:flex md:justify-around md:items-center sm:footer-horizontal bg-base-300 text-base-content p-10">
-      <nav>
-        <img className="w-15 h-15 rounded-full" src={logo} alt="" />
-        <span className="lg:text-2xl text-sm font-bold bg-gradient-to-r from-amber-500 to-orange-600  hover:from-amber-600 hover:to-orange-700 bg-clip-text text-transparent">
-          FoodieMart
-        </span>
-      </nav>
-      <nav className="flex flex-col gap-4 text-left md:text-left">
-        <p className="font-medium  text-md bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent">
-          At FoodieMart, we bring the world <br /> of flavors to your doorstep.
-          Discover premium ingredients, authentic tastes, <br /> and a culinary
-          journey like no other.
-        </p>
+    <footer className="relative bg-[#1E1B2E] dark:bg-[#0D0B14] text-gray-200 pt-16">
+      {/* Wave Top Border */}
+      <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0]">
+        <svg
+          className="relative block w-full h-16"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 1440 120"
+          preserveAspectRatio="none"
+        >
+          <path
+            d="M0,0 C360,100 1080,0 1440,100 L1440,0 L0,0 Z"
+            className="fill-[#FFD166] dark:fill-[#F4C430]"
+          />
+        </svg>
+      </div>
 
-        <div className="flex flex-col md:flex-row gap-6 justify-start items-start">
-          <Link to={"https://foodibd.com/about-us"} className="link link-hover">
-            About us
-          </Link>
-          <Link
-            to={"https://foodibd.com/contact-us"}
-            className="link link-hover"
-          >
-            Contact
-          </Link>
-          <Link to={"/allreveiws"} className="link link-hover">
-            Upcoming Food
-          </Link>
-          <a className="link link-hover">More info</a>
+      {/* Footer Content */}
+      <div className="max-w-7xl mx-auto px-6 lg:px-20 flex flex-col lg:flex-row justify-between gap-12 relative z-10">
+        {/* Logo & Description */}
+        <div className="flex flex-col gap-4 max-w-sm">
+          <div className="flex items-center gap-3">
+            <img src={logo} alt="Logo" className="w-12 h-12 rounded-full" />
+            <span className="text-2xl font-bold bg-gradient-to-r from-yellow-400 via-amber-400 to-orange-500 bg-clip-text text-transparent">
+              FoodieMart
+            </span>
+          </div>
+          <p className="text-sm text-gray-300 dark:text-gray-400 leading-relaxed">
+            Bringing the world of flavors to your doorstep. Discover premium
+            ingredients, authentic tastes, and a culinary journey like no other.
+          </p>
         </div>
-      </nav>
 
-      <nav>
-        <h6 className="footer-title">Social</h6>
-        <div className="grid grid-flow-col gap-4">
-          <a className="cursor-pointer">
-            <FaXTwitter size={22} />
-          </a>
-          <a className="cursor-pointer">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              className="fill-current"
+        {/* Navigation Links (Smooth Scroll) */}
+        <div className="flex flex-col gap-4">
+          <h6 className="text-lg font-semibold">Quick Links</h6>
+          <div className="flex flex-col md:flex-row md:gap-6 gap-3">
+            <a
+              href="#about"
+              className="hover:text-yellow-400 transition-colors duration-300"
             >
-              <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"></path>
-            </svg>
-          </a>
-          <a className="cursor-pointer">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              className="fill-current"
+              About Us
+            </a>
+            <a
+              href="#contact"
+              className="hover:text-yellow-400 transition-colors duration-300"
             >
-              <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"></path>
-            </svg>
-          </a>
+              Contact
+            </a>
+            <a
+              href="#upcoming"
+              className="hover:text-yellow-400 transition-colors duration-300"
+            >
+              Upcoming Food
+            </a>
+            <a
+              href="#more-info"
+              className="hover:text-yellow-400 transition-colors duration-300"
+            >
+              More Info
+            </a>
+          </div>
         </div>
-      </nav>
+
+        {/* Social Icons */}
+        <div className="flex flex-col gap-4">
+          <h6 className="text-lg font-semibold">Follow Us</h6>
+          <div className="flex gap-4">
+            {/* Twitter */}
+            <motion.a
+              whileHover={{ scale: 1.2 }}
+              href="https://twitter.com/yourprofile"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-300 dark:text-gray-400 hover:text-blue-400 transition-colors duration-300"
+            >
+              <FaTwitter size={22} />
+            </motion.a>
+
+            {/* Facebook */}
+            <motion.a
+              whileHover={{ scale: 1.2 }}
+              href="https://www.facebook.com/shamsallabib"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-300 dark:text-gray-400 hover:text-blue-600 transition-colors duration-300"
+            >
+              <FaFacebookF size={22} />
+            </motion.a>
+
+            {/* LinkedIn */}
+            <motion.a
+              whileHover={{ scale: 1.2 }}
+              href="https://www.linkedin.com/in/shams-al-labib"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-300 dark:text-gray-400 hover:text-blue-500 transition-colors duration-300"
+            >
+              <FaLinkedinIn size={22} />
+            </motion.a>
+          </div>
+        </div>
+      </div>
+
+      {/* Footer Bottom */}
+      <div className="mt-12 text-center text-sm text-gray-500 dark:text-gray-400 pb-6">
+        © {new Date().getFullYear()} FoodieMart. All rights reserved.
+      </div>
     </footer>
   );
 };

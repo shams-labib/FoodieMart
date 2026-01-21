@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 import { AuthContext } from "../Firebase content/Auth/AuthContext";
 import { Helmet } from "react-helmet-async";
 import { updateProfile } from "firebase/auth";
+import { motion } from "framer-motion";
 
 const Register = () => {
   const { createUser, signInWithGoogle } = useContext(AuthContext);
@@ -95,44 +96,48 @@ const Register = () => {
   };
 
   return (
-    <div
-      data-aos="fade-right"
-      className="min-h-screen flex items-center justify-center p-8 bg-base-100"
-    >
+    <div className="min-h-screen flex items-center justify-center p-6 bg-base-50 dark:bg-gray-800 transition-colors duration-500">
       <Helmet>
         <title>Register || FoodieMart</title>
       </Helmet>
 
-      <div className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl w-full max-w-md border">
-        <h2 className="text-3xl font-bold text-center mb-6">Register</h2>
+      <motion.div
+        initial={{ opacity: 0, y: -50, scale: 0.9 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.7, ease: "easeOut" }}
+        className="w-full max-w-md bg-white dark:bg-gray-900 p-8 rounded-3xl shadow-2xl border border-gray-100 dark:border-gray-700 transition-colors duration-500"
+      >
+        <h2 className="text-3xl font-bold text-center mb-6 text-gray-800 dark:text-gray-100">
+          Register
+        </h2>
 
         <form onSubmit={handleRegister} className="space-y-5">
           <input
             name="name"
             type="text"
             placeholder="Full Name"
-            className="input input-bordered w-full"
+            className="w-full px-4 py-2 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-pink-400 transition-colors duration-300"
           />
           <input
             name="photo"
             type="text"
             placeholder="Photo URL"
-            className="input input-bordered w-full"
+            className="w-full px-4 py-2 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-pink-400 transition-colors duration-300"
           />
-
           <input
             name="email"
             type="email"
             placeholder="Email Address"
-            className="input input-bordered w-full"
+            className="w-full px-4 py-2 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-pink-400 transition-colors duration-300"
           />
 
+          {/* Password */}
           <div className="relative">
             <input
               name="password"
               type={showPassword ? "text" : "password"}
               placeholder="Password"
-              className="input input-bordered w-full"
+              className="w-full px-4 py-2 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-pink-400 transition-colors duration-300"
             />
           </div>
 
@@ -141,50 +146,69 @@ const Register = () => {
               name="confirmPassword"
               type={showPassword ? "text" : "password"}
               placeholder="Confirm Password"
-              className="input input-bordered w-full"
+              className="w-full px-4 py-2 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-pink-400 transition-colors duration-300"
             />
-
             <span
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-3 text-xl cursor-pointer"
+              className="absolute right-3 top-3 text-xl text-gray-600 dark:text-gray-300 cursor-pointer"
             >
               {showPassword ? <FaEye /> : <LuEyeClosed />}
             </span>
           </div>
 
-          <label className="flex items-center gap-2 text-sm cursor-pointer">
+          <label className="flex items-center gap-2 text-sm cursor-pointer text-gray-700 dark:text-gray-200">
             <input
               type="checkbox"
               checked={tc}
               onChange={(e) => setTc(e.target.checked)}
             />
             I agree to the{" "}
-            <span className="text-blue-600 underline">Terms & Conditions</span>
+            <span className="text-blue-500 dark:text-blue-400 underline">
+              Terms & Conditions
+            </span>
           </label>
 
-          <button
+          <motion.button
             disabled={loading}
-            className="btn w-full bg-gradient-to-r from-amber-500 to-orange-600 text-white"
+            type="submit"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="w-full bg-gradient-to-r from-amber-500 to-orange-600 text-white font-semibold py-2 rounded-xl shadow-lg border-none transition-all duration-300"
           >
             {loading ? "Processing..." : "Register 🚀"}
-          </button>
+          </motion.button>
+
+          {/* OR Divider */}
+          <div className="flex items-center w-full gap-2">
+            <span className="flex-grow h-px bg-gray-300 dark:bg-gray-600 transition-colors duration-300"></span>
+            <span className="text-gray-600 dark:text-gray-300 font-semibold text-sm">
+              OR
+            </span>
+            <span className="flex-grow h-px bg-gray-300 dark:bg-gray-600 transition-colors duration-300"></span>
+          </div>
+
           {/* Google Login */}
-          <button
+          <motion.button
             type="button"
             onClick={handleGoogleLogin}
-            className="btn btn-outline w-full flex gap-2"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="flex items-center justify-center gap-2 w-full font-bold border border-gray-300 dark:border-gray-600 py-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-300"
           >
             <FcGoogle size={25} /> Continue with Google
-          </button>
+          </motion.button>
 
-          <p className="text-center text-sm">
+          <p className="text-center text-sm text-gray-600 dark:text-gray-300">
             Already have an account?{" "}
-            <Link className="text-blue-500 font-semibold" to={"/login"}>
+            <Link
+              className="text-blue-500 dark:text-blue-400 font-semibold hover:text-blue-700 dark:hover:text-blue-300 transition-colors duration-300"
+              to={"/login"}
+            >
               Login Now
             </Link>
           </p>
         </form>
-      </div>
+      </motion.div>
     </div>
   );
 };

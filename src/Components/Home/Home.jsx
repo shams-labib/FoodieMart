@@ -8,6 +8,8 @@ import AboutUs from "../../Pages/About Us/AboutUs";
 import Services from "../../Pages/Services/Services";
 import NewsletterSection from "../../Pages/NewsletterSection/NewsletterSection";
 import StatsSection from "../../Pages/StatsSection/StatsSection";
+import InfoSection from "../Blog/TopSellerBurgers";
+import SupportPage from "../Help/Help";
 
 const Home = () => {
   return (
@@ -15,12 +17,22 @@ const Home = () => {
       <TopSlider></TopSlider>
       <HeroSection></HeroSection>
       <HomeCard></HomeCard>
-      <ResturentData></ResturentData>
-      <AboutUs></AboutUs>
+      <section id="upcoming">
+        <ResturentData></ResturentData>
+      </section>
+      <InfoSection></InfoSection>3
+      <section id="about">
+        <AboutUs></AboutUs>
+      </section>
       <Services></Services>
       <FloatingContact></FloatingContact>
-      <NewsletterSection></NewsletterSection>
+      <section id="more-info">
+        <NewsletterSection></NewsletterSection>
+      </section>
       <StatsSection></StatsSection>
+      <section id="contact">
+        <SupportPage></SupportPage>
+      </section>
     </div>
   );
 };
